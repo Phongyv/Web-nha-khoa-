@@ -2,10 +2,11 @@
 import { initializeApp } from "firebase/app";
 import { getAuth } from "firebase/auth";
 import { signInWithEmailAndPassword } from "firebase/auth";
-import { getFirestore, collection, addDoc,getDocs } from "firebase/firestore";  
+import { getFirestore, collection, addDoc,getDocs , doc, deleteDoc,updateDoc,getDoc} from "firebase/firestore";  
 import { query, where } from 'firebase/firestore'; 
 import { setData } from "./localstorage";
 import { cookie } from "./cookies";
+import { setDoc } from "firebase/firestore/lite";
 
 const firebaseConfig = {
   apiKey: process.env.REACT_APP_API_KEY,
@@ -57,7 +58,20 @@ function addUser(){
           phone:document.getElementById("create-phone").value,
   }
     addDoc(collection(db, 'users'), data)  
-    .then(() => {  
+    .then(() => {
+      document.getElementById("create-name").value=''
+      document.getElementById("create-product").value=''
+      document.getElementById("create-cung1").value=''
+      document.getElementById("create-cung2").value=''
+      document.getElementById("create-cung3").value=''
+      document.getElementById("create-cung4").value=''
+      document.getElementById("create-id").value=''
+      document.getElementById("create-date").value=''
+      document.getElementById("create-month").value=''
+      document.getElementById("create-year").value=''
+    document.getElementById("create-dentist").value=''
+      document.getElementById("create-address").value=''
+      document.getElementById("create-phone").value=''
         alert('Thêm người dùng thành công');  
     })  
     .catch((error) => {  
@@ -97,5 +111,57 @@ const getUsersById = async () => {
 }  
 
 
+async function deleteDocument(collectionName,documentId) {  
+  const docRef = doc(db, collectionName, documentId); 
+  try {  
+      await deleteDoc(docRef);  
+      alert('Tài liệu đã được xóa thành công!');  
+      window.location.reload();
+  } catch (error) {  
+      console.error('Lỗi khi xóa tài liệu: ', error);  
+  }  
+}  
 
-export {loginSubmit,addUser,getUsers,getUsersById,db};
+async function getDocumentById(collectionName,documentId) {  
+  const docRef = doc(db, collectionName, documentId);
+  try {  
+      const docSnap = await getDoc(docRef);  
+
+      if (docSnap.exists()) {  
+        setData(docSnap.data().name,docSnap.data().id,docSnap.data().phone,docSnap.data().address,docSnap.data().product,docSnap.data().dentist,docSnap.data().date,docSnap.data().month,docSnap.data().year,docSnap.data().cung1,docSnap.data().cung2,docSnap.data().cung3,docSnap.data().cung4)
+      } else {  
+          console.log('Tài liệu không tồn tại!');  
+      }  
+  } catch (error) {  
+      console.error('Lỗi khi lấy tài liệu: ', error);  
+  }  
+}  
+
+
+async function updateDocument(collectionName,documentId) {  
+  const docRef = doc(db,collectionName, documentId);
+
+  try {  
+      await setDoc(docRef,{  
+        name:document.getElementById("change-name").value,
+        product:document.getElementById("change-product").value,
+        cung1:document.getElementById("change-cung1").value,
+        cung2:document.getElementById("change-cung2").value,
+        cung3:document.getElementById("change-cung3").value,
+        cung4:document.getElementById("change-cung4").value,
+        id:document.getElementById("change-id").value,
+        date:document.getElementById("change-date").value,
+        month:document.getElementById("change-month").value,
+        year:document.getElementById("change-year").value,
+        dentist:document.getElementById("change-dentist").value,
+        address: document.getElementById("change-address").value,
+        phone:document.getElementById("change-phone").value
+      },{merge:true});  
+      alert('Tài liệu đã được cập nhật thành công!');  
+  } catch (error) {  
+      console.error('Lỗi khi cập nhật tài liệu: ', error);  
+  }  
+}  
+
+
+export {loginSubmit,addUser,getUsers,getUsersById,deleteDocument,updateDocument,getDocumentById,db};
