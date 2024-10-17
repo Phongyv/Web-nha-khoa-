@@ -3,15 +3,15 @@ import "../css/admin.css"
 import { useState,useEffect } from "react";
 import { db } from "../backend/firebase";
 import { collection, getDocs } from "firebase/firestore";
-// import Cookies from 'js-cookie'; 
+import Cookies from 'js-cookie'; 
 
 function Admin(){
 
-    // const cookies = Cookies.get('cookietoken'); 
-    // const checkCookie = 'admin12345'
-    // if(cookies===checkCookie){
-    //     window.location.href = "/login";
-    // }
+    const cookies = Cookies.get('cookietoken'); 
+    const checkCookie = "mko0nji9bhu8vgy7cft6xdr5zse4aw3q2"
+    if(cookies!==checkCookie){
+        window.location.href = "/login";
+    }
 
    
     const [users, setUsers] = useState([]);
@@ -163,61 +163,69 @@ function Admin(){
                 </div>
             </div>
             <div className="admin-change" id="admin-change">
-                <span className="body-change_title"></span>
-                <div className="admin-change_body">
+                <span className="body-change_title">{window.localStorage.getItem('id')}</span>
+                
+                    <div className="admin-change_body">
+                   
                     <div className="admin-change_body-item">
                         <span className="admin-change_body-item_title">Tên</span>
-                        <input type="text" className="admin-change_body-item_input" id="change-name" placeholder={a}/>
+                        <input type="text" className="admin-change_body-item_input" id="change-name" defaultValue={a}/>
                     </div>
                     <div className="admin-change_body-item">
                         <span className="admin-change_body-item_title">Số điện thoại</span>
-                        <input type="text" className="admin-change_body-item_input" id="change-phone" placeholder={b}/>
+                        <input type="text" className="admin-change_body-item_input" id="change-phone" defaultValue={b}/>
                     </div>
                     <div className="admin-change_body-item">
                         <span className="admin-change_body-item_title">Địa chỉ</span>
-                        <input type="text" className="admin-change_body-item_input" id="change-address" placeholder={c}/>
+                        <input type="text" className="admin-change_body-item_input" id="change-address" defaultValue={c}/>
                     </div>
                     <div className="admin-change_body-item">
                         <span className="admin-change_body-item_title">Sản phẩm</span>
-                        <input type="text" className="admin-change_body-item_input" id="change-product" placeholder={d}/>
+                        <input type="text" className="admin-change_body-item_input" id="change-product" defaultValue={d}/>
                     </div>
                     <div className="admin-change_body-item">
                         <span className="admin-change_body-item_title">Nha sĩ</span>
-                        <input type="text" className="admin-change_body-item_input" id="change-dentist" placeholder={e}/>
+                        <input type="text" className="admin-change_body-item_input" id="change-dentist" defaultValue={e}/>
                     </div>
                     <div className="admin-change_body-item">
                         <span className="admin-change_body-item_title">Ngày</span>
-                        <input type="text" className="admin-change_body-item_input" id="change-date" placeholder={f}/>
+                        <input type="text" className="admin-change_body-item_input" id="change-date" defaultValue={f}/>
                     </div>
                     <div className="admin-change_body-item">
                         <span className="admin-change_body-item_title">Tháng</span>
-                        <input type="text" className="admin-change_body-item_input" id="change-month" placeholder={g}/>
+                        <input type="text" className="admin-change_body-item_input" id="change-month" defaultValue={g}/>
                     </div>
                     <div className="admin-change_body-item">
                         <span className="admin-change_body-item_title">Năm</span>
-                        <input type="text" className="admin-change_body-item_input" id="change-year" placeholder={h}/>
+                        <input type="text" className="admin-change_body-item_input" id="change-year" defaultValue={h}/>
                     </div>
                     <div className="admin-change_body-item">
                         <span className="admin-change_body-item_title">Cung 1:</span>
-                        <input type="text" className="admin-change_body-item_input" id="change-cung1" placeholder={i}/>
+                        <input type="text" className="admin-change_body-item_input" id="change-cung1" defaultValue={i}/>
                     </div>
                     <div className="admin-change_body-item">
                         <span className="admin-change_body-item_title">Cung 2:</span>
-                        <input type="text" className="admin-change_body-item_input" id="change-cung2" placeholder={k}/>
+                        <input type="text" className="admin-change_body-item_input" id="change-cung2" defaultValue={k}/>
                     </div>
                     <div className="admin-change_body-item">
                         <span className="admin-change_body-item_title">Cung 3:</span>
-                        <input type="text" className="admin-change_body-item_input" id="change-cung3" placeholder={l}/>
+                        <input type="text" className="admin-change_body-item_input" id="change-cung3" defaultValue={l}/>
                     </div>
                     <div className="admin-change_body-item">
                         <span className="admin-change_body-item_title">Cung 4:</span>
-                        <input type="text" className="admin-change_body-item_input" id="change-cung4" placeholder={m}/>
+                        <input type="text" className="admin-change_body-item_input" id="change-cung4" defaultValue={m}/>
                     </div>
                 </div>
+                  
                 <div className="admin-change_button">
                     <button onClick={()=>{document.getElementById('admin-change').style.display='none'}} className="admin-change_button-cancel">Hủy</button>
-                    <button className="admin-change_button-delete">Xóa</button>
-                    <button className="admin-change_button-update">Cập nhật</button>
+                    <button onClick={
+                        () => {
+                            var token = window.localStorage.getItem('docId')
+                             deleteDocument('users',token)}} className="admin-change_button-delete">Xóa</button>
+                    <button onClick={()=>{ var token = window.localStorage.getItem('docId')
+                        updateDocument('users',token);
+                        }} className="admin-change_button-update">Cập nhật</button>
                 </div>
             </div>
         </div>

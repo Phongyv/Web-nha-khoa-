@@ -250,6 +250,15 @@ background: linear-gradient(172deg, rgba(2,0,36,1) 0%, rgba(9,43,121,1) 35%, rgb
     display: flex;
     flex-direction: column;
     display: none;
+    text-align: center;
+    padding-top: 20px;
+}
+
+.body-change_title{
+    padding: 30px;
+    font-size: 40px;
+    color: #000000;
+    font-weight: 900;
 }
 
 .admin-change_body{
@@ -274,7 +283,7 @@ background: linear-gradient(172deg, rgba(2,0,36,1) 0%, rgba(9,43,121,1) 35%, rgb
 }
 
 .admin-change_body-item_input{
-    padding: 5px 0;
+    padding: 5px ;
     flex: 3;
 }
 

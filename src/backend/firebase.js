@@ -6,7 +6,6 @@ import { getFirestore, collection, addDoc,getDocs , doc, deleteDoc,updateDoc,get
 import { query, where } from 'firebase/firestore'; 
 import { setData } from "./localstorage";
 import { cookie } from "./cookies";
-import { setDoc } from "firebase/firestore/lite";
 
 const firebaseConfig = {
   apiKey: process.env.REACT_APP_API_KEY,
@@ -30,7 +29,8 @@ const loginSubmit = () =>{
   signInWithEmailAndPassword(auth,email,password)
   .then(()=>{
     alert("Đăng nhập thành công");
-    cookie(password);
+    cookie("mko0nji9bhu8vgy7cft6xdr5zse4aw3q2");
+    window.localStorage.setItem("docId",'tE8FLrr8x5kLhKbFiEpF');
    window.location.pathname='/admin'
   })
   .catch((error)=>{
@@ -79,14 +79,15 @@ function addUser(){
     }); 
 }
 
-const getUsers = async () => {  
+const getUsers = async (arr) => {  
   const usersCollection = collection(db, 'users');  
   try {  
       const userSnapshot = await getDocs(usersCollection);  
       const userList = userSnapshot.docs.map(doc => ({  
           id: doc.id,  
           ...doc.data()  
-      }));  
+      })); 
+      arr = userList;
       console.log( userList);  
   } catch (error) {  
       console.error( error);  
@@ -104,8 +105,10 @@ const getUsersById = async () => {
             ...doc.data()  
         }));  
         setData(userList[0].name,userList[0].id,userList[0].phone,userList[0].address,userList[0].product,userList[0].dentist,userList[0].date,userList[0].month,userList[0].year,userList[0].cung1,userList[0].cung2,userList[0].cung3,userList[0].cung4);  
+        alert(`Xin chào ${userList[0].name}`);
         window.location.pathname='/customer';
     } catch (error) {  
+      alert('Không tìm thấy người dùng')
         console.error( error);  
     }  
 }  
@@ -139,25 +142,25 @@ async function getDocumentById(collectionName,documentId) {
 
 
 async function updateDocument(collectionName,documentId) {  
-  const docRef = doc(db,collectionName, documentId);
+  const docRef = doc(db,collectionName,documentId);
 
   try {  
-      await setDoc(docRef,{  
+      await updateDoc(docRef,{  
         name:document.getElementById("change-name").value,
         product:document.getElementById("change-product").value,
         cung1:document.getElementById("change-cung1").value,
         cung2:document.getElementById("change-cung2").value,
         cung3:document.getElementById("change-cung3").value,
         cung4:document.getElementById("change-cung4").value,
-        id:document.getElementById("change-id").value,
         date:document.getElementById("change-date").value,
         month:document.getElementById("change-month").value,
         year:document.getElementById("change-year").value,
         dentist:document.getElementById("change-dentist").value,
         address: document.getElementById("change-address").value,
         phone:document.getElementById("change-phone").value
-      },{merge:true});  
+      });  
       alert('Tài liệu đã được cập nhật thành công!');  
+      window.location.reload();
   } catch (error) {  
       console.error('Lỗi khi cập nhật tài liệu: ', error);  
   }  
