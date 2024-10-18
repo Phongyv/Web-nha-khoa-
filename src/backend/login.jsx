@@ -4,7 +4,7 @@ import { loginSubmit } from "./firebase";
 function Login(){
     return(
         <div className="login">
-           <span className="login-span">Nha Khoa Dương Thu</span>
+           <span className="login-span">Dương Thu Lab</span>
            <div className="login-form">
             <div className="login-form_item">
                 <input className="login-form_item-input" id="login-email" type="email" placeholder="Nhập email"/>

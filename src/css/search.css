@@ -32,6 +32,8 @@
 }
 
 @media screen and (min-width:1200px) {
+
+
     .search-brand_span{
         font-size: 40px;
         font-weight: 600;
@@ -44,6 +46,38 @@
         width: 100%;
     }
 }
+
+.slideshow-container {  
+    position: relative;  
+    max-width: 600px;  
+    margin: auto;  
+    overflow: hidden;  
+    margin-top: 10px;
+}  
+.slides {  
+    display: flex;  
+    animation: slide 12s infinite; /* Thời gian toàn bộ slideshow */  
+}  
+.slide {  
+    min-width: 100%;  
+    transition: transform 1s ease;  
+}  
+.slide-img {  
+    height: 80%;
+    width: 100%;  
+    height: auto;  
+    border-radius: 5px;
+}  
+@keyframes slide {  
+    0% { transform: translateX(0); }  
+    20% { transform: translateX(0); } /* Giữ slide đầu tiên */  
+    25% { transform: translateX(-100%); } /* Chuyển sang slide thứ hai */  
+    45% { transform: translateX(-100%); } /* Giữ slide thứ hai */  
+    50% { transform: translateX(-200%); } /* Chuyển sang slide thứ ba */  
+    70% { transform: translateX(-200%); } /* Giữ slide thứ ba */  
+    75% { transform: translateX(0); } /* Quay lại slide đầu tiên */  
+}  
+
 
 .search-content{
     display: flex;
@@ -67,3 +101,16 @@
     padding: 10px 0;
     border-color: rgb(255, 255, 255);
 }
+
+
+.search-info{
+    margin-top: 20px;
+    display: flex;
+    flex-direction: column;
+}
+
+.search-info_text{
+    padding-top: 5px;
+    color: rgba(240, 248, 255, 0.783);
+}
+

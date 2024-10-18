@@ -19,7 +19,7 @@ function Customer(){
     return(
         <div className="customer">
             <div className="customer-top">
-                <span className="customer-top_span">Nha Khoa Dương Thu</span>
+                <span className="customer-top_span">Dương Thu Lab</span>
                 <div className="customer-top_img"></div>
             </div>
             <div className="customer-body">
@@ -32,17 +32,16 @@ function Customer(){
                     <span className="customer-body_first-item">∎ Cung 3: {cung3}</span>
                     <span className="customer-body_first-item">∎ Cung 4: {cung4}</span>
                     <span className="customer-body_first-item">∎ Số thẻ: {id}</span>
-                    <span className="customer-body_first-item">∎ Thời hạn bảo hành đến: ngày{date} tháng{month} năm{year}</span>
+                    <span className="customer-body_first-item">∎ Thời hạn bảo hành đến: Ngày {date} tháng {month} năm {year}</span>
                     <span className="customer-body_first-item">∎ Nha khoa: {dentist}</span>
                     <span className="customer-body_first-item">∎ Địa chỉ: {address}</span>
                     <span className="customer-body_first-item">∎ Điện thoại: {phone}</span>
                 </div>
                 <div className="customer-body_second">
-                    <span className="customer-body_second-item">∎ Trường hợp được bảo hành: Sản phẩm bị nứt, vỡ và biến dạng trong quá trình sử dụng sau khi đã phục hình vĩnh viễn cho bệnh nhân.</span>
-                    <span className="customer-body_second-item">∎ Thẻ bảo hành hợp lệ và có thời gian bảo hành.</span>
-                    <span className="customer-body_second-item">∎ Điều kiện không được bảo hành: Phục hình bị nứt, vỡ do bệnh nhân bị ngã hoặc do tai nạn.</span>
-                    <span className="customer-body_second-item">∎ Phục hình bị nứt, vỡ do sử dụng sai như cắn vật cứng, mở nắp bia hay tự ý gỡ bỏ phục hình.</span>
-                    <span className="customer-body_second-item">∎ Thủ tục bảo hành: Khi gặp sự cố, bệnh nhân mang theo Thẻ bảo hành đến Phòng nha.</span>
+                    <span className="customer-body_second-item">Lời khuyên cho bệnh nhân:</span>
+                    <span className="customer-body_second-item">1. Khám răng định kỳ 6 tháng/ lần.</span>
+                    <span className="customer-body_second-item">2. Đánh răng đúng cách.</span>
+                    <span className="customer-body_second-item">3. Tránh cắn, nhai vật cứng.</span>
                 </div>
             </div>
         </div>

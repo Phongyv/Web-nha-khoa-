@@ -114,11 +114,45 @@ const getUsersById = async () => {
 }  
 
 
+const searchUser = async () => {
+  const name= document.getElementById('admin-dashboard_top-search').value
+  const q = query(collection(db, 'users'), where('name', '==', name));  
+  try {  
+      const querySnapshot = await getDocs(q);  
+      const userList = querySnapshot.docs.map(doc => ({  
+          id: doc.id,  
+          ...doc.data()  
+      }));  
+      setData(userList[0].name,userList[0].id,userList[0].phone,userList[0].address,userList[0].product,userList[0].dentist,userList[0].date,userList[0].month,userList[0].year,userList[0].cung1,userList[0].cung2,userList[0].cung3,userList[0].cung4);  
+      alert(`Tìm kiếm thành công cho: ${userList[0].name}`);
+  } catch (error) {  
+    alert('Không tìm thấy người dùng')
+      console.error( error);  
+  }  
+}  
+
+const searchUsers = async () => {
+  const name= document.getElementById('admin-dashboard_top-search').value
+  const q = query(collection(db, 'users'), where('name', '==', name));  
+  try {  
+      const querySnapshot = await getDocs(q);  
+      const userList = querySnapshot.docs.map(doc => ({  
+          id: doc.id,  
+          ...doc.data()  
+      }));  
+      setData(userList[0].name,userList[0].id,userList[0].phone,userList[0].address,userList[0].product,userList[0].dentist,userList[0].date,userList[0].month,userList[0].year,userList[0].cung1,userList[0].cung2,userList[0].cung3,userList[0].cung4);  
+  } catch (error) {  
+      console.error( error);  
+  }  
+}  
+
+
 async function deleteDocument(collectionName,documentId) {  
   const docRef = doc(db, collectionName, documentId); 
   try {  
       await deleteDoc(docRef);  
       alert('Tài liệu đã được xóa thành công!');  
+      window.localStorage.clear();
       window.location.reload();
   } catch (error) {  
       console.error('Lỗi khi xóa tài liệu: ', error);  
@@ -160,6 +194,7 @@ async function updateDocument(collectionName,documentId) {
         phone:document.getElementById("change-phone").value
       });  
       alert('Tài liệu đã được cập nhật thành công!');  
+      window.localStorage.clear();
       window.location.reload();
   } catch (error) {  
       console.error('Lỗi khi cập nhật tài liệu: ', error);  
@@ -167,4 +202,4 @@ async function updateDocument(collectionName,documentId) {
 }  
 
 
-export {loginSubmit,addUser,getUsers,getUsersById,deleteDocument,updateDocument,getDocumentById,db};
+export {loginSubmit,addUser,getUsers,getUsersById,deleteDocument,updateDocument,getDocumentById,searchUser,searchUsers,db};

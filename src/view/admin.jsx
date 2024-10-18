@@ -1,9 +1,10 @@
-import { addUser, deleteDocument, getDocumentById, updateDocument } from "../backend/firebase";
+import { addUser, deleteDocument, getDocumentById, searchUser, searchUsers, updateDocument } from "../backend/firebase";
 import "../css/admin.css"
 import { useState,useEffect } from "react";
 import { db } from "../backend/firebase";
 import { collection, getDocs } from "firebase/firestore";
 import Cookies from 'js-cookie'; 
+
 
 function Admin(){
 
@@ -59,14 +60,19 @@ function Admin(){
         setM(window.localStorage.getItem('cung4'));
     }
 
+    console.log(a,b,c,d,e,f,g,h,i,k,l,m)
 
     return(
         <div className="admin">
             <div className="admin-dashboard">
                 <div className="admin-dashboard_top">
                     <h1 className="admin-dashboard_top-title">Admin Dashboard</h1>
-                    <input className="admin-dashboard_top-search" type="text" placeholder="Tìm kiếm"></input>
-                    <button onClick={open} className="admin-dashboard_top-create">Tạo mới</button>
+                    <div className="admin-dashboard_top-search_area">
+                    <input className="admin-dashboard_top-search" id="admin-dashboard_top-search" type="text" placeholder="Tìm kiếm mã bảo hành"></input>
+                    <button onAbort={searchUsers} onClick={()=>{searchUser()}} className="admin-dashboard_top-search_button">🔍</button>
+                    </div>
+
+                    <button onClick={open} className="admin-dashboard_top-create">Tạo mới 🆕</button>
                 </div>
                 <div className="admin-dashboard_body">
                     <div className="admin-dashboard_body-title">
@@ -83,7 +89,7 @@ function Admin(){
                         <div className="admin-dashboard_body-item_name">{item.name}</div>
                         <div className="admin-dashboard_body-item_phone">{item.phone}</div>
                         <div className="admin-dashboard_body-item_address">{item.address}</div>
-                        <button onClick={(e)=>{window.localStorage.setItem("docId",e.target.id); getDocumentById('users',window.localStorage.getItem("docId")); setDefault(); document.getElementById('admin-change').style.display='block'; }}  className="admin-dashboard_body-item_add" id={item.token} >Sửa</button>
+                        <button onMouseOver={(e)=>{window.localStorage.setItem("docId",e.target.id); getDocumentById('users',window.localStorage.getItem("docId")); setDefault();   }} onClick={(e)=>{window.localStorage.setItem("docId",e.target.id); getDocumentById('users',window.localStorage.getItem("docId")); setDefault();  document.getElementById('admin-change').style.display='block'; }} className="admin-dashboard_body-item_add"  id={item.token} >Sửa 🔧</button>
                         </div> 
                         
                     ))
@@ -93,6 +99,7 @@ function Admin(){
             </div>
             <div className="admin-create" id="admin-create">
                 <span className="admin-create_title">Tạo khách hàng mới</span>
+                <button onClick={close} className="admin-create_exit">✖</button>
                 <div className="admin-create_body">
                     <div className="admin-create_bodys">
                     <div className="admin-create_body-item">
@@ -159,75 +166,81 @@ function Admin(){
                 </div>
                 <div className="admin-create_button">
                     <button onClick={close} className="admin-create_button-cancel">Hủy</button>
-                    <button onClick={addUser} className="admin-create_button-create">Tạo mới</button>
+                    <button onClick={addUser} className="admin-create_button-create">Tạo mới </button>
                 </div>
             </div>
-            <div className="admin-change" id="admin-change">
-                <span className="body-change_title">{window.localStorage.getItem('id')}</span>
-                
-                    <div className="admin-change_body">
-                   
-                    <div className="admin-change_body-item">
-                        <span className="admin-change_body-item_title">Tên</span>
-                        <input type="text" className="admin-change_body-item_input" id="change-name" defaultValue={a}/>
-                    </div>
-                    <div className="admin-change_body-item">
-                        <span className="admin-change_body-item_title">Số điện thoại</span>
-                        <input type="text" className="admin-change_body-item_input" id="change-phone" defaultValue={b}/>
-                    </div>
-                    <div className="admin-change_body-item">
-                        <span className="admin-change_body-item_title">Địa chỉ</span>
-                        <input type="text" className="admin-change_body-item_input" id="change-address" defaultValue={c}/>
-                    </div>
-                    <div className="admin-change_body-item">
-                        <span className="admin-change_body-item_title">Sản phẩm</span>
-                        <input type="text" className="admin-change_body-item_input" id="change-product" defaultValue={d}/>
-                    </div>
-                    <div className="admin-change_body-item">
-                        <span className="admin-change_body-item_title">Nha sĩ</span>
-                        <input type="text" className="admin-change_body-item_input" id="change-dentist" defaultValue={e}/>
-                    </div>
-                    <div className="admin-change_body-item">
-                        <span className="admin-change_body-item_title">Ngày</span>
-                        <input type="text" className="admin-change_body-item_input" id="change-date" defaultValue={f}/>
-                    </div>
-                    <div className="admin-change_body-item">
-                        <span className="admin-change_body-item_title">Tháng</span>
-                        <input type="text" className="admin-change_body-item_input" id="change-month" defaultValue={g}/>
-                    </div>
-                    <div className="admin-change_body-item">
-                        <span className="admin-change_body-item_title">Năm</span>
-                        <input type="text" className="admin-change_body-item_input" id="change-year" defaultValue={h}/>
-                    </div>
-                    <div className="admin-change_body-item">
-                        <span className="admin-change_body-item_title">Cung 1:</span>
-                        <input type="text" className="admin-change_body-item_input" id="change-cung1" defaultValue={i}/>
-                    </div>
-                    <div className="admin-change_body-item">
-                        <span className="admin-change_body-item_title">Cung 2:</span>
-                        <input type="text" className="admin-change_body-item_input" id="change-cung2" defaultValue={k}/>
-                    </div>
-                    <div className="admin-change_body-item">
-                        <span className="admin-change_body-item_title">Cung 3:</span>
-                        <input type="text" className="admin-change_body-item_input" id="change-cung3" defaultValue={l}/>
-                    </div>
-                    <div className="admin-change_body-item">
-                        <span className="admin-change_body-item_title">Cung 4:</span>
-                        <input type="text" className="admin-change_body-item_input" id="change-cung4" defaultValue={m}/>
-                    </div>
-                </div>
+           
+                    <div className="admin-change" id="admin-change">
+                    
+    <span className="body-change_title">{window.localStorage.getItem('id')}</span>
+        <div className="admin-change_body">
+       
+        <div className="admin-change_body-item">
+            <span className="admin-change_body-item_title">Tên</span>
+            <input type="text" className="admin-change_body-item_input" id="change-name" defaultValue={a}/>
+        </div>
+        <div className="admin-change_body-item">
+            <span className="admin-change_body-item_title">Số điện thoại</span>
+            <input type="text" className="admin-change_body-item_input" id="change-phone" defaultValue={b}/>
+        </div>
+        <div className="admin-change_body-item">
+            <span className="admin-change_body-item_title">Địa chỉ</span>
+            <input type="text" className="admin-change_body-item_input" id="change-address" defaultValue={c}/>
+        </div>
+        <div className="admin-change_body-item">
+            <span className="admin-change_body-item_title">Sản phẩm</span>
+            <input type="text" className="admin-change_body-item_input" id="change-product" defaultValue={d}/>
+        </div>
+        <div className="admin-change_body-item">
+            <span className="admin-change_body-item_title">Nha sĩ</span>
+            <input type="text" className="admin-change_body-item_input" id="change-dentist" defaultValue={e}/>
+        </div>
+        <div className="admin-change_body-item">
+            <span className="admin-change_body-item_title">Ngày</span>
+            <input type="text" className="admin-change_body-item_input" id="change-date" defaultValue={f}/>
+        </div>
+        <div className="admin-change_body-item">
+            <span className="admin-change_body-item_title">Tháng</span>
+            <input type="text" className="admin-change_body-item_input" id="change-month" defaultValue={g}/>
+        </div>
+        <div className="admin-change_body-item">
+            <span className="admin-change_body-item_title">Năm</span>
+            <input type="text" className="admin-change_body-item_input" id="change-year" defaultValue={h}/>
+        </div>
+        <div className="admin-change_body-item">
+            <span className="admin-change_body-item_title">Cung 1:</span>
+            <input type="text" className="admin-change_body-item_input" id="change-cung1" defaultValue={i}/>
+        </div>
+        <div className="admin-change_body-item">
+            <span className="admin-change_body-item_title">Cung 2:</span>
+            <input type="text" className="admin-change_body-item_input" id="change-cung2" defaultValue={k}/>
+        </div>
+        <div className="admin-change_body-item">
+            <span className="admin-change_body-item_title">Cung 3:</span>
+            <input type="text" className="admin-change_body-item_input" id="change-cung3" defaultValue={l}/>
+        </div>
+        <div className="admin-change_body-item">
+            <span className="admin-change_body-item_title">Cung 4:</span>
+            <input type="text" className="admin-change_body-item_input" id="change-cung4" defaultValue={m}/>
+        </div>
+    </div>
+
                   
                 <div className="admin-change_button">
-                    <button onClick={()=>{document.getElementById('admin-change').style.display='none'}} className="admin-change_button-cancel">Hủy</button>
+                    <button onClick={()=>{window.localStorage.clear();
+                        document.getElementById('admin-change').style.display='none'}} className="admin-change_button-cancel">Hủy</button>
                     <button onClick={
                         () => {
                             var token = window.localStorage.getItem('docId')
                              deleteDocument('users',token)}} className="admin-change_button-delete">Xóa</button>
                     <button onClick={()=>{ var token = window.localStorage.getItem('docId')
                         updateDocument('users',token);
-                        }} className="admin-change_button-update">Cập nhật</button>
+                        }} className="admin-change_button-update">Cập nhật 💾</button>
                 </div>
+
             </div>
+            
+            
         </div>
     )
 }
